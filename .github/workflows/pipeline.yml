@@ -31,3 +31,5 @@ jobs:
         with:
           heroku_api_key: ${{secrets.HEROKU_APP_KEY}}
           heroku_app_name: "poxeapp"
+          healthcheck: "https://poxeapp.herokuapp.com/health"
+          checkstring: "ok"
