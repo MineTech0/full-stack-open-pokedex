@@ -27,10 +27,9 @@ jobs:
           start: npm run start-prod
           wait-on: http://localhost:5000
       - name: deployment
-        run: heroku git:remote -a poxeapp
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
           heroku_api_key: ${{secrets.HEROKU_APP_KEY}}
-          heroku_app_name: "poxeapp"
+          heroku_app_name: poxeapp
           healthcheck: "https://poxeapp.herokuapp.com/health"
           checkstring: "ok"
