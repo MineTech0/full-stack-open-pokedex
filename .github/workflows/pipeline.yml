@@ -12,6 +12,30 @@ jobs:
   simple_deployment_pipeline:
     runs-on: ubuntu-18.04
     steps:
+        #failure
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: 'failure'
+          fields: repo,message,commit,author,took
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: ${{ job.status == 'failure' }}
+
+        #success
+      - uses: 8398a7/action-slack@v3
+        with:
+          status: 'success'
+          fields: commit,author,took
+          custom_payload: |
+            {
+              attachments: [{
+                color: 'good',
+                text: `a new version deployed to https://poxeapp.heroku.com (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR	} build took ${process.env.AS_TOOK}`,
+              }]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }} # required
+        if: ${{ job.status == 'success' }}
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
