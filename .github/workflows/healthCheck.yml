@@ -1,9 +1,9 @@
 name: Health Check
 
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '*/5 * * * *'
 
 jobs:
   health_check:
